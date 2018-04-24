@@ -1,0 +1,7 @@
+C:\Users\user\OneDrive\Documents\AI\iengine\iengine\bin\Debug\iengine.exe.config
+C:\Users\user\OneDrive\Documents\AI\iengine\iengine\bin\Debug\iengine.exe
+C:\Users\user\OneDrive\Documents\AI\iengine\iengine\bin\Debug\iengine.pdb
+C:\Users\user\OneDrive\Documents\AI\iengine\iengine\obj\Debug\iengine.csprojResolveAssemblyReference.cache
+C:\Users\user\OneDrive\Documents\AI\iengine\iengine\obj\Debug\iengine.csproj.CoreCompileInputs.cache
+C:\Users\user\OneDrive\Documents\AI\iengine\iengine\obj\Debug\iengine.exe
+C:\Users\user\OneDrive\Documents\AI\iengine\iengine\obj\Debug\iengine.pdb
