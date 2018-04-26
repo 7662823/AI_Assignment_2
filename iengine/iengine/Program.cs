@@ -11,7 +11,9 @@ namespace iengine
         static void Main(string[] args)
         {
             ReadTextFile file = new ReadTextFile();
-            file.ReadFile("test1");
+            List<Item> Rules = file.ReadFile("test1");
+            Process functions = new Process();
+            functions.TruthTableCheck(Rules);
         }
     }
 }

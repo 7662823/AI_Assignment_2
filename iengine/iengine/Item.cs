@@ -10,14 +10,30 @@ namespace iengine
     {
 
         public string name;
-        public bool valid;
+        public bool ASK = false;
+        public bool valid = false;
         public List<Relation> relations;
+        public Item()
+        {
+            relations = new List<Relation>();
+        }
+        public bool Contains(String name)
+        {
+            if (name == this.name)
+                return true;
+            return false;
+        }
+        
     }
 
     class Relation
     {
-        public string name;
+        public List<string> name;
         public string clause;
+
+        public Relation()
+        {
+            name = new List<string>();
+        }
     }
-    
 }

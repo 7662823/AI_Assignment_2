@@ -10,6 +10,7 @@ namespace iengine
 {
     class ReadTextFile
     {
+      public List<Item> Rules;
         public List<Item> ReadFile(string fileName)
         {
             List<Item> result = new List<Item>();
@@ -39,42 +40,146 @@ namespace iengine
                         rules = s.Split(';');
                         foreach (string r in rules)
                         {
-                            string[] item;
+                            string[] SplitRule;
                             string identifier = string.Join("|", identifiers.ToArray());
                             //splits the string with the corresponding identifiers and removes any spaces from the split string
-                            item = Regex.Split(r.Replace(" ", string.Empty), @"(" + identifier +@")");
-                            foreach(string i in item)
+                            SplitRule = Regex.Split(r.Replace(" ", string.Empty), @"(" + identifier +@")");
+                            if(SplitRule[0] == "")
                             {
-                                //if item is a identifier
-                                if (identifiers.Any(i.Contains)){
-
-                                }
-                                else
-                                {
-                                    bool newItem = true;
-                                    foreach(Item j in result)
+                                //string[] a;
+                                SplitRule = new string[0];
+                            }
+                            switch (SplitRule.Length)
+                            {
+                                //assign item to be true
+                                case 1:
+                                    var match = result.FirstOrDefault(stringToCheck => stringToCheck.Contains(SplitRule[0]));
+                                    if (match != null)
                                     {
-                                        if (j.name == i)
-                                        {
-                                            newItem = false;
-                                        }
+                                        match.valid = true;
                                     }
-                                    if(newItem == true)
+                                    else {
+                                        result.Add(new Item());
+                                        result.Last().name = SplitRule[0];
+                                        result.Last().valid = true;
+                                    }
+                                    break;
+                                case 3:
+                                    var match2 = result.FirstOrDefault(stringToCheck => stringToCheck.Contains(SplitRule[0]));
+                                    var match3 = result.FirstOrDefault(stringToCheck => stringToCheck.Contains(SplitRule[2]));
+
+                                    if (match2 != null)
+                                    {
+                                        Relation newRelation = new Relation();
+                                        newRelation.name.Add(SplitRule[2]);
+                                        newRelation.clause = "=>";
+                                        match2.relations.Add(newRelation);
+                                    }
+                                    else
                                     {
                                         result.Add(new Item());
-                                        result.Last().name = i;
+                                        result.Last().name = SplitRule[0];
+                                        Relation newRelation = new Relation();
+                                        newRelation.name.Add(SplitRule[2]);
+                                        newRelation.clause = "=>";
+                                        result.Last().relations.Add(newRelation);
                                     }
-                                }
+
+                                    if (match3 != null)
+                                    {
+                                        Relation newRelation = new Relation();
+                                        newRelation.name.Add(SplitRule[0]);
+                                        newRelation.clause = "<=";
+                                        match3.relations.Add(newRelation);
+                                    }
+                                    else
+                                    {
+                                        result.Add(new Item());
+                                        result.Last().name = SplitRule[2];
+                                        Relation newRelation = new Relation();
+                                        newRelation.name.Add(SplitRule[0]);
+                                        newRelation.clause = "<=";
+                                        result.Last().relations.Add(newRelation);
+                                    }
+                                    break;
+                                case 5:
+                                    var match4 = result.FirstOrDefault(stringToCheck => stringToCheck.Contains(SplitRule[0]));
+                                    var match5 = result.FirstOrDefault(stringToCheck => stringToCheck.Contains(SplitRule[2]));
+                                    var match6 = result.FirstOrDefault(stringToCheck => stringToCheck.Contains(SplitRule[4]));
+
+                                    if (match4 != null)
+                                    {
+                                        Relation newRelation = new Relation();
+                                       // newRelation.name.Add(SplitRule[2]);
+                                        newRelation.name.Add(SplitRule[4]);
+
+                                        newRelation.clause = "=>";
+                                        match4.relations.Add(newRelation);
+                                    }
+                                    else
+                                    {
+                                        result.Add(new Item());
+                                        result.Last().name = SplitRule[0];
+                                        Relation newRelation = new Relation();
+                                        newRelation.name.Add(SplitRule[4]);
+                                        newRelation.clause = "=>";
+                                        result.Last().relations.Add(newRelation);
+                                    }
+
+                                    if (match5 != null)
+                                    {
+                                        Relation newRelation = new Relation();
+                                        newRelation.name.Add(SplitRule[4]);
+                                        newRelation.clause = "=>";
+                                        match5.relations.Add(newRelation);
+                                    }
+                                    else
+                                    {
+                                        result.Add(new Item());
+                                        result.Last().name = SplitRule[2];
+                                        Relation newRelation = new Relation();
+                                        newRelation.name.Add( SplitRule[4]);
+                                        newRelation.clause = "=>";
+                                        result.Last().relations.Add(newRelation);
+                                    }
+                                    if (match6 != null)
+                                    {
+                                        Relation newRelation = new Relation();
+                                        newRelation.name.Add( SplitRule[0]);
+                                        newRelation.name.Add(SplitRule[2]);
+
+                                        newRelation.clause = "<=";
+                                        match6.relations.Add(newRelation);
+                                    }
+                                    else
+                                    {
+                                        result.Add(new Item());
+                                        result.Last().name = SplitRule[4];
+                                        Relation newRelation = new Relation();
+                                        newRelation.name.Add(SplitRule[0]);
+                                        newRelation.name.Add(SplitRule[2]);
+
+                                        newRelation.clause = "<=";
+                                        result.Last().relations.Add(newRelation);
+                                    }
+                                    break;
+                                default:
+                                    break;
                             }
                         }
                     }
                     else if (ask == true)
                     {
-
+                        var item = result.FirstOrDefault(ItemToCheck => ItemToCheck.Contains(s));
+                        if(item != null)
+                        {
+                            item.ASK = true;
+                        }
                     }
-                  
+
                 }
             }
+            Rules = result;
             return result;
         }
     }
