@@ -11,9 +11,49 @@ namespace iengine
     class ReadTextFile
     {
       public List<Item> Rules;
+
+        public ReadTextFile()
+        {
+            Rules = new List<Item>();
+        }
+
+        public List<Item> addRule(string[] rule, string clause, string target)
+        {
+            //check if the list of items (the rules) comtains the item already
+            var matchingItem = Rules.FirstOrDefault(stringToCheck => stringToCheck.Contains(target));
+            Relation newRelation = new Relation();
+
+            //if the target item has been found in the current rule list, then add another relation rule to it
+            //otherwise create a new item in the rule list
+            if (matchingItem != null)
+            {
+                //add the rule relation to the name array for however many relations there are
+                foreach (string s in rule)
+                {
+                    newRelation.name.Add(s);
+                }
+        
+                newRelation.clause = clause;
+                matchingItem.relations.Add(newRelation);
+            }
+            else
+            {
+                Rules.Add(new Item());
+                Rules.Last().name = target;
+                foreach (string s in rule)
+                {
+                    newRelation.name.Add(s);
+                }
+             
+
+                newRelation.clause = clause;
+                Rules.Last().relations.Add(newRelation);
+            }
+                return Rules;
+        }
         public List<Item> ReadFile(string fileName)
         {
-            List<Item> result = new List<Item>();
+            //List<Item> result = new List<Item>();
             string[] lines = System.IO.File.ReadAllLines(Directory.GetCurrentDirectory() + "/" + fileName + ".txt");
             bool tell = false;
             bool ask = false;
@@ -53,115 +93,32 @@ namespace iengine
                             {
                                 //assign item to be true
                                 case 1:
-                                    var match = result.FirstOrDefault(stringToCheck => stringToCheck.Contains(SplitRule[0]));
+
+                                    var match = Rules.FirstOrDefault(stringToCheck => stringToCheck.Contains(SplitRule[0]));
                                     if (match != null)
                                     {
                                         match.valid = true;
                                     }
                                     else {
-                                        result.Add(new Item());
-                                        result.Last().name = SplitRule[0];
-                                        result.Last().valid = true;
+                                        Rules.Add(new Item());
+                                        Rules.Last().name = SplitRule[0];
+                                        Rules.Last().valid = true;
                                     }
                                     break;
                                 case 3:
-                                    var match2 = result.FirstOrDefault(stringToCheck => stringToCheck.Contains(SplitRule[0]));
-                                    var match3 = result.FirstOrDefault(stringToCheck => stringToCheck.Contains(SplitRule[2]));
+                                    //create the relation in the items being "SplitRule[0] SplitRule[1] SplitRule[2]" eg, "A => B"
+                                    addRule(new string[] { SplitRule[2] }, SplitRule[1], SplitRule[0]);
+                                    // '!' indicates it is the reverse order
+                                    addRule(new string[] { SplitRule[0] }, "!"+SplitRule[1], SplitRule[2]);
 
-                                    if (match2 != null)
-                                    {
-                                        Relation newRelation = new Relation();
-                                        newRelation.name.Add(SplitRule[2]);
-                                        newRelation.clause = "=>";
-                                        match2.relations.Add(newRelation);
-                                    }
-                                    else
-                                    {
-                                        result.Add(new Item());
-                                        result.Last().name = SplitRule[0];
-                                        Relation newRelation = new Relation();
-                                        newRelation.name.Add(SplitRule[2]);
-                                        newRelation.clause = "=>";
-                                        result.Last().relations.Add(newRelation);
-                                    }
-
-                                    if (match3 != null)
-                                    {
-                                        Relation newRelation = new Relation();
-                                        newRelation.name.Add(SplitRule[0]);
-                                        newRelation.clause = "<=";
-                                        match3.relations.Add(newRelation);
-                                    }
-                                    else
-                                    {
-                                        result.Add(new Item());
-                                        result.Last().name = SplitRule[2];
-                                        Relation newRelation = new Relation();
-                                        newRelation.name.Add(SplitRule[0]);
-                                        newRelation.clause = "<=";
-                                        result.Last().relations.Add(newRelation);
-                                    }
                                     break;
                                 case 5:
-                                    var match4 = result.FirstOrDefault(stringToCheck => stringToCheck.Contains(SplitRule[0]));
-                                    var match5 = result.FirstOrDefault(stringToCheck => stringToCheck.Contains(SplitRule[2]));
-                                    var match6 = result.FirstOrDefault(stringToCheck => stringToCheck.Contains(SplitRule[4]));
 
-                                    if (match4 != null)
-                                    {
-                                        Relation newRelation = new Relation();
-                                       // newRelation.name.Add(SplitRule[2]);
-                                        newRelation.name.Add(SplitRule[4]);
+                                    //
+                                    addRule(new string[] { SplitRule[4] }, SplitRule[3], SplitRule[0]);
+                                    addRule(new string[] { SplitRule[4] }, SplitRule[3], SplitRule[2]);
+                                    addRule(new string[] { SplitRule[0], SplitRule[2] }, "!"+SplitRule[3], SplitRule[4]);
 
-                                        newRelation.clause = "=>";
-                                        match4.relations.Add(newRelation);
-                                    }
-                                    else
-                                    {
-                                        result.Add(new Item());
-                                        result.Last().name = SplitRule[0];
-                                        Relation newRelation = new Relation();
-                                        newRelation.name.Add(SplitRule[4]);
-                                        newRelation.clause = "=>";
-                                        result.Last().relations.Add(newRelation);
-                                    }
-
-                                    if (match5 != null)
-                                    {
-                                        Relation newRelation = new Relation();
-                                        newRelation.name.Add(SplitRule[4]);
-                                        newRelation.clause = "=>";
-                                        match5.relations.Add(newRelation);
-                                    }
-                                    else
-                                    {
-                                        result.Add(new Item());
-                                        result.Last().name = SplitRule[2];
-                                        Relation newRelation = new Relation();
-                                        newRelation.name.Add( SplitRule[4]);
-                                        newRelation.clause = "=>";
-                                        result.Last().relations.Add(newRelation);
-                                    }
-                                    if (match6 != null)
-                                    {
-                                        Relation newRelation = new Relation();
-                                        newRelation.name.Add( SplitRule[0]);
-                                        newRelation.name.Add(SplitRule[2]);
-
-                                        newRelation.clause = "<=";
-                                        match6.relations.Add(newRelation);
-                                    }
-                                    else
-                                    {
-                                        result.Add(new Item());
-                                        result.Last().name = SplitRule[4];
-                                        Relation newRelation = new Relation();
-                                        newRelation.name.Add(SplitRule[0]);
-                                        newRelation.name.Add(SplitRule[2]);
-
-                                        newRelation.clause = "<=";
-                                        result.Last().relations.Add(newRelation);
-                                    }
                                     break;
                                 default:
                                     break;
@@ -170,7 +127,7 @@ namespace iengine
                     }
                     else if (ask == true)
                     {
-                        var item = result.FirstOrDefault(ItemToCheck => ItemToCheck.Contains(s));
+                        var item = Rules.FirstOrDefault(ItemToCheck => ItemToCheck.Contains(s));
                         if(item != null)
                         {
                             item.ASK = true;
@@ -179,8 +136,8 @@ namespace iengine
 
                 }
             }
-            Rules = result;
-            return result;
+            //Rules = result;
+            return Rules;
         }
     }
 }
