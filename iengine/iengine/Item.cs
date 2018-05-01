@@ -12,7 +12,10 @@ namespace iengine
         public string name;
         public bool ASK = false;
         public bool valid = false;
+        public bool Checked = false;
+
         public List<Relation> relations;
+
         public Item()
         {
             relations = new List<Relation>();

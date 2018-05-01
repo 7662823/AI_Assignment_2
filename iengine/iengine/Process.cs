@@ -48,5 +48,39 @@ namespace iengine
 
 
         }
+
+        public string FowardChaining(List<Item> items)
+        {
+            string result = "";
+
+
+            foreach (Item i in items)
+            {
+                if(i.valid == true )
+                {
+                    foreach(Relation r in i.relations)
+                    {
+                        foreach (string s in r.name) {
+                            if (r.clause == "=>")
+                            {
+                                var match = items.FirstOrDefault(stringToCheck => stringToCheck.Contains(s));
+                                match.valid = true;
+                            }
+                            else if (r.clause == "-"){
+
+                            }
+                            else if (r.clause == "!=>")
+                            {
+
+                            }
+                            
+                        }
+                    }
+
+
+                }
+            }
+            return result;
+        }
     }
 }
