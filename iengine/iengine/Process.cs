@@ -8,6 +8,79 @@ namespace iengine
 {
     class Process
     {
+        private string currentMethod;
+        private List<Item> items;
+
+        public Process(string method, List<Item> _items)
+        {
+            items = _items;
+            currentMethod = method;
+        }
+
+        public string RunMethod()
+        {
+            string output;
+            switch (currentMethod)
+            {
+                case "BC":
+                    output = BackwardChaining();
+                    break;
+                //case "FC":
+                //   output = ForwardChaining();
+                //    break;
+                case "TT":
+                   output = TruthTable();
+                    break;
+                default:
+                    output = "Can't Identify search method (argument 2)";
+                    break;
+            }
+            return output;
+        }
+
+        public string BackwardChaining()
+        {
+            string result = "";
+            string answer;
+            bool isTrue = false;
+            List<Item> Path = new List<Item>();
+           
+            
+
+
+
+
+            if(isTrue == true)
+            {
+                answer = "YES";
+            }
+            else
+            {
+                answer = "NO";
+            }
+            result = answer + ": ";
+
+            foreach(Item i in Path)
+            {
+                if (i != Path.Last<Item>())
+                {
+                    result += i.name + ", ";
+                }
+                else
+                {
+                    result += i.name;
+                }
+            }
+            return result;
+        }
+
+        public string TruthTable()
+        {
+            string result = "";
+            return result;
+        } 
+
+
 
         private List<List<bool>> GenerateTruthTable(int tableSize)
         {
