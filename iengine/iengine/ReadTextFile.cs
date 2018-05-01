@@ -51,6 +51,8 @@ namespace iengine
             }
                 return Rules;
         }
+
+
         public List<Item> ReadFile(string fileName)
         {
             //List<Item> result = new List<Item>();
@@ -114,9 +116,10 @@ namespace iengine
                                     break;
                                 case 5:
 
-                                    //
-                                    addRule(new string[] { SplitRule[4] }, SplitRule[3], SplitRule[0]);
-                                    addRule(new string[] { SplitRule[4] }, SplitRule[3], SplitRule[2]);
+                                    // "-" denotes that it is a link to another object rather then "=>" being implies
+                                    
+                                    addRule(new string[] { SplitRule[4] }, "-", SplitRule[0]);
+                                    addRule(new string[] { SplitRule[4] }, "-", SplitRule[2]);
                                     addRule(new string[] { SplitRule[0], SplitRule[2] }, "!"+SplitRule[3], SplitRule[4]);
 
                                     break;
