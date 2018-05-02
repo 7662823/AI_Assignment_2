@@ -11,6 +11,11 @@ namespace iengine
         private string currentMethod;
         private List<Item> items;
 
+        public Item FindQuery()
+        {
+            return items.FirstOrDefault(ItemToCheck => ItemToCheck.query);
+        }
+
         public Process(string method, List<Item> _items)
         {
             items = _items;
@@ -44,9 +49,9 @@ namespace iengine
             string answer;
             bool isTrue = false;
             List<Item> Path = new List<Item>();
-           
-            
 
+            Path.Add(FindQuery());
+                       
 
 
 

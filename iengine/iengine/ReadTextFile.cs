@@ -133,7 +133,7 @@ namespace iengine
                         var item = Rules.FirstOrDefault(ItemToCheck => ItemToCheck.Contains(s));
                         if(item != null)
                         {
-                            item.ASK = true;
+                            item.query = true;
                         }
                     }
 

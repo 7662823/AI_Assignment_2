@@ -10,7 +10,7 @@ namespace iengine
     {
 
         public string name;
-        public bool ASK = false;
+        public bool query = false;
         public bool valid = false;
         public bool Checked = false;
 
