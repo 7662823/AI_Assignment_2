@@ -16,11 +16,10 @@ namespace iengine
             string method = "";
             if (args.Length != 0)
             {
-                if (args.Length == 3)
-                {
-                    Items = file.ReadFile(args[2]);
-                    method = file.ReadFile(args[1]).ToString().ToUpper();
-                    
+                if (args.Length == 2)
+                {   
+                    Items = file.ReadFile(args[1]);
+                    method = args[0].ToString().ToUpper();
                 }
                 else
                 {
@@ -31,8 +30,8 @@ namespace iengine
             else
             {
                 Items = file.ReadFile("test1");
-                method = "BC";
-                //method = "FC";
+                //method = "BC";
+                method = "FC";
                 //method = "TT";
             }
             functions = new Process(method, Items);
