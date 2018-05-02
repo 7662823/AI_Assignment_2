@@ -25,9 +25,9 @@ namespace iengine
                 case "BC":
                     output = BackwardChaining();
                     break;
-                //case "FC":
-                //   output = ForwardChaining();
-                //    break;
+                case "FC":
+                    output = ForwardChaining();
+                    break;
                 case "TT":
                    output = TruthTable();
                     break;
@@ -122,37 +122,109 @@ namespace iengine
 
         }
 
-        public string FowardChaining(List<Item> items)
+        public string ForwardChaining()
         {
             string result = "";
+            List<Item> agenda = new List<Item>();
 
-
+            bool itemfound = false;
+            //adds the initial valid items to the search list first
             foreach (Item i in items)
             {
-                if(i.valid == true )
+                if (i.valid)
+                    agenda.Add(i);
+            }
+
+            while(agenda.Count != 0)
+            {
+                Item currentItem = new Item();
+                bool novaliditem = true;
+                //checks the initially valid items before checking the nonvalid items in the list
+                for  (int i = agenda.Count - 1; i >=0; i--)
                 {
-                    foreach(Relation r in i.relations)
+                    if (agenda[i].valid == true)
                     {
-                        foreach (string s in r.name) {
+                        currentItem = agenda[i];
+                        agenda.Remove(agenda[i]);
+                        novaliditem = false;
+                        break;
+                    }
+                }
+                if (novaliditem)
+                {
+                    currentItem = agenda.Last();
+                    agenda.Remove(agenda.Last());
+                }
+                    //checks each relation in the current item selected
+                    foreach (Relation r in currentItem.relations)
+                    {
+                        foreach (string s in r.name)
+                        {
                             if (r.clause == "=>")
                             {
+                            //if the item implies something and it is valid then make the item it is implying valid and add the item to the list
+                                if (currentItem.valid == true) { 
                                 var match = items.FirstOrDefault(stringToCheck => stringToCheck.Contains(s));
                                 match.valid = true;
+                                agenda.Add(match);
+                                currentItem.Checked = true;
+                                result += currentItem.name + ", ";
+                                }
                             }
-                            else if (r.clause == "-"){
-
+                            else if (r.clause == "-")
+                            {
+                            //if the item is related to another item, add the other item to the list to be checked later
+                                    var match = items.FirstOrDefault(stringToCheck => stringToCheck.Contains(s));
+                                    agenda.Add(match);
+                                    if (currentItem.Checked != true)
+                                    {
+                                        result += currentItem.name + ", ";
+                                        currentItem.Checked = true;
+                                    }
                             }
                             else if (r.clause == "!=>")
                             {
-
+                                //if the item is implied by another item where all instances are true, make the current item true
+                                if (currentItem.valid == false)
+                                {
+                                    var match = items.FirstOrDefault(stringToCheck => stringToCheck.Contains(s));
+                                    if (match.valid == false)
+                                    {
+                                        currentItem.valid = false;
+                                        break;
+                                    }
+                                    else
+                                        currentItem.valid = true;
+                                }
                             }
-                            
+
                         }
                     }
-
-
+                
+                if (currentItem.relations.Count == 0)
+                {
+                    result += currentItem.name + ", ";
                 }
+                if (currentItem.ASK == true)
+                {
+                    itemfound = true;
+                    if(currentItem.Checked)
+                        result = result.Remove(result.Count() - 2);
+                    else
+                        result += currentItem.name;
+                    if (currentItem.valid == true)
+                        result = "YES: " + result;
+                    else
+                        result = "NO: " + result;
+
+                    break;
+                }
+
+
             }
+            if (!itemfound)
+                result = "NO: " + result.Remove(result.Count() - 2);
+
             return result;
         }
     }
