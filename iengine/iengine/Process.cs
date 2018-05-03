@@ -160,8 +160,14 @@ namespace iengine
                     currentItem = agenda.Last();
                     agenda.Remove(agenda.Last());
                 }
-                    //checks each relation in the current item selected
-                    foreach (Relation r in currentItem.relations)
+                //adds the current item name to the output display
+                if (currentItem.Checked != true)
+                {
+                    currentItem.Checked = true;
+                    result += currentItem.name + ", ";
+                }
+                //checks each relation in the current item selected
+                foreach (Relation r in currentItem.relations)
                     {
                         foreach (string s in r.name)
                         {
@@ -172,11 +178,6 @@ namespace iengine
                                 var match = items.FirstOrDefault(stringToCheck => stringToCheck.Contains(s));
                                 match.valid = true;
                                 agenda.Add(match);
-                                if (currentItem.Checked != true)
-                                {
-                                    currentItem.Checked = true;
-                                    result += currentItem.name + ", ";
-                                }
                                 }
                             }
                             else if (r.clause == "-")
@@ -184,11 +185,6 @@ namespace iengine
                             //if the item is related to another item, add the other item to the list to be checked later
                                     var match = items.FirstOrDefault(stringToCheck => stringToCheck.Contains(s));
                                     agenda.Add(match);
-                                    if (currentItem.Checked != true)
-                                    {
-                                        result += currentItem.name + ", ";
-                                        currentItem.Checked = true;
-                                    }
                             }
                             else if (r.clause == "!=>")
                             {
@@ -204,23 +200,10 @@ namespace iengine
                                     else
                                         currentItem.valid = true;
                                 }
-                                
-                                
-                                if (currentItem.Checked != true)
-                                {
-                                    result += currentItem.name + ", ";
-                                    currentItem.Checked = true;
-                                }
-                            
                             }
 
                         }
                     }
-                
-                if (currentItem.relations.Count == 0)
-                {
-                    result += currentItem.name + ", ";
-                }
                 if (currentItem.query == true)
                 {
                     itemfound = true;
@@ -228,6 +211,7 @@ namespace iengine
                         result = result.Remove(result.Count() - 2);
                     else
                         result += currentItem.name;
+
                     if (currentItem.valid == true)
                         result = "YES: " + result;
                     else
@@ -235,8 +219,6 @@ namespace iengine
 
                     break;
                 }
-
-
             }
             if (!itemfound)
                 result = "NO: " + result.Remove(result.Count() - 2);
