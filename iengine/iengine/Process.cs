@@ -172,8 +172,11 @@ namespace iengine
                                 var match = items.FirstOrDefault(stringToCheck => stringToCheck.Contains(s));
                                 match.valid = true;
                                 agenda.Add(match);
-                                currentItem.Checked = true;
-                                result += currentItem.name + ", ";
+                                if (currentItem.Checked != true)
+                                {
+                                    currentItem.Checked = true;
+                                    result += currentItem.name + ", ";
+                                }
                                 }
                             }
                             else if (r.clause == "-")
@@ -201,6 +204,14 @@ namespace iengine
                                     else
                                         currentItem.valid = true;
                                 }
+                                
+                                
+                                if (currentItem.Checked != true)
+                                {
+                                    result += currentItem.name + ", ";
+                                    currentItem.Checked = true;
+                                }
+                            
                             }
 
                         }
@@ -210,7 +221,7 @@ namespace iengine
                 {
                     result += currentItem.name + ", ";
                 }
-                if (currentItem.ASK == true)
+                if (currentItem.query == true)
                 {
                     itemfound = true;
                     if(currentItem.Checked)
