@@ -10,16 +10,18 @@ namespace iengine
     {
         private string currentMethod;
         private List<Item> items;
+        private List<List<string>> rules;
 
         public Item FindQuery()
         {
             return items.FirstOrDefault(ItemToCheck => ItemToCheck.query);
         }
 
-        public Process(string method, List<Item> _items)
+        public Process(string method, List<Item> _items, List<List<string>> Rules)
         {
             items = _items;
             currentMethod = method;
+            rules = Rules;
         }
 
         public string RunMethod()
@@ -77,15 +79,81 @@ namespace iengine
                 }
             }
             return result;
-        }
+        } 
 
         public string TruthTable()
         {
+            //generate a truth table the size of number of items
+            List<List<bool>> itemTable = GenerateTruthTable(items.Count);
+            List<List<bool>> Ruletable = new List<List<bool>>();
             string result = "";
+            int validCount = 0;
+            bool itemValid = true;
+            bool queryReault = true;
+            foreach (List<bool> conditions in itemTable)
+            {
+                foreach (List<string> r in rules)
+                {
+                    if (r.Count == 1)
+                    {
+                        //for C, then C must be true, otherwise break the function and mark the item as valid being false.
+                        if (!conditions[items.IndexOf(items.FirstOrDefault(stringToCheck => stringToCheck.Contains(r[0])))])
+                        {
+                                itemValid = false;
+                                break;
+                        }
+                    }
+                    else if (r.Count == 3)
+                    {
+                        //for A=>C, if B = true, then C must be true, otherwise break the function and mark the item as valid being false.
+                        if (conditions[items.IndexOf(items.FirstOrDefault(stringToCheck => stringToCheck.Contains(r[0])))])
+                        {
+                            if (!conditions[items.IndexOf(items.FirstOrDefault(stringToCheck => stringToCheck.Contains(r[2])))])
+                            {
+                                itemValid = false;
+                                break;
+                            }
+                        }
+                    }
+                    else if (r.Count == 5)
+                    {
+                        //for A&B=>C, if A & B = true, then C must be true, otherwise break the function and mark the item as valid being false.
+                        if (conditions[items.IndexOf(items.FirstOrDefault(stringToCheck => stringToCheck.Contains(r[0])))] &&
+                            conditions[items.IndexOf(items.FirstOrDefault(stringToCheck => stringToCheck.Contains(r[2])))])
+                        {
+                            if (!conditions[items.IndexOf(items.FirstOrDefault(stringToCheck => stringToCheck.Contains(r[4])))])
+                            {
+                                itemValid = false;
+                                break;
+                            }
+                        }
+                    }
+                }
+                if (itemValid)
+                {
+                    validCount++;
+                    if (!conditions[items.IndexOf(items.FirstOrDefault(q => q.query))])
+                    {
+                        queryReault = false;
+                        break;
+                    }
+                }
+                else
+                    itemValid = true;
+            }
+            //if query result is false/no, there is no need to produce the numeber of valid nodes.
+            if (validCount == 0)
+                result = "NO";
+            else
+            {
+                if (queryReault)
+                    result = "YES: " + validCount.ToString();
+                else
+                    result = "NO ";
+
+            }
             return result;
         } 
-
-
 
         private List<List<bool>> GenerateTruthTable(int tableSize)
         {
@@ -116,15 +184,6 @@ namespace iengine
                 truthTable.Add(boolTable);
             }
             return truthTable;
-        }
-
-
-        public void TruthTableCheck(List<Item> rules)
-        {
-            //generate a truth table the size of number of items
-            List<List<bool>> table = GenerateTruthTable(rules.Count);
-
-
         }
 
         public string ForwardChaining()

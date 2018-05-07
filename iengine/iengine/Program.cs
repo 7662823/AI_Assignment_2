@@ -31,11 +31,11 @@ namespace iengine
             {
                 Items = file.ReadFile("test1");
                 //method = "BC";
-                method = "FC";
-                //method = "TT";
+                //method = "FC";
+                method = "TT";
             }
-            functions = new Process(method, Items);
-            functions.TruthTableCheck(Items);
+            functions = new Process(method, Items, file.Rules);
+            //functions.TruthTable();
 
             //Write answer output to console based on chosen method
             Console.WriteLine(functions.RunMethod());

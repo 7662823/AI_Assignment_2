@@ -10,17 +10,20 @@ namespace iengine
 {
     class ReadTextFile
     {
-      public List<Item> Rules;
+      public List<Item> Items;
+
+        public List<List<string>> Rules;
 
         public ReadTextFile()
         {
-            Rules = new List<Item>();
+            Items = new List<Item>();
+            Rules = new List<List<string>>();
         }
 
         public List<Item> addRule(string[] rule, string clause, string target)
         {
             //check if the list of items (the rules) comtains the item already
-            var matchingItem = Rules.FirstOrDefault(stringToCheck => stringToCheck.Contains(target));
+            var matchingItem = Items.FirstOrDefault(stringToCheck => stringToCheck.Contains(target));
             Relation newRelation = new Relation();
 
             //if the target item has been found in the current rule list, then add another relation rule to it
@@ -38,8 +41,8 @@ namespace iengine
             }
             else
             {
-                Rules.Add(new Item());
-                Rules.Last().name = target;
+                Items.Add(new Item());
+                Items.Last().name = target;
                 foreach (string s in rule)
                 {
                     newRelation.name.Add(s);
@@ -47,9 +50,9 @@ namespace iengine
              
 
                 newRelation.clause = clause;
-                Rules.Last().relations.Add(newRelation);
+                Items.Last().relations.Add(newRelation);
             }
-                return Rules;
+                return Items;
         }
 
 
@@ -80,6 +83,7 @@ namespace iengine
                     if (tell == true)
                     {
                         rules = s.Split(';');
+                        
                         foreach (string r in rules)
                         {
                             string[] SplitRule;
@@ -91,20 +95,24 @@ namespace iengine
                                 //string[] a;
                                 SplitRule = new string[0];
                             }
+                            else
+                            {
+                                Rules.Add(new List<string>(SplitRule));
+                            }
                             switch (SplitRule.Length)
                             {
                                 //assign item to be true
                                 case 1:
 
-                                    var match = Rules.FirstOrDefault(stringToCheck => stringToCheck.Contains(SplitRule[0]));
+                                    var match = Items.FirstOrDefault(stringToCheck => stringToCheck.Contains(SplitRule[0]));
                                     if (match != null)
                                     {
                                         match.valid = true;
                                     }
                                     else {
-                                        Rules.Add(new Item());
-                                        Rules.Last().name = SplitRule[0];
-                                        Rules.Last().valid = true;
+                                        Items.Add(new Item());
+                                        Items.Last().name = SplitRule[0];
+                                        Items.Last().valid = true;
                                     }
                                     break;
                                 case 3:
@@ -130,7 +138,7 @@ namespace iengine
                     }
                     else if (ask == true)
                     {
-                        var item = Rules.FirstOrDefault(ItemToCheck => ItemToCheck.Contains(s));
+                        var item = Items.FirstOrDefault(ItemToCheck => ItemToCheck.Contains(s));
                         if(item != null)
                         {
                             item.query = true;
@@ -140,7 +148,7 @@ namespace iengine
                 }
             }
             //Rules = result;
-            return Rules;
+            return Items;
         }
     }
 }
