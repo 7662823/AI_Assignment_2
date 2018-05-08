@@ -50,9 +50,71 @@ namespace iengine
             string result = "";
             string answer;
             bool isTrue = false;
-            List<Item> Path = new List<Item>();
+            bool reachedEnd = false;
+            List<Item> SearchPath = new List<Item>();
+            List<Item> TruePath = new List<Item>();
 
-            Path.Add(FindQuery());
+            //adds target/query to path.
+            foreach (Item i in items)
+            {
+                if (i.query == true)
+                {
+                    SearchPath.Add(i);
+                }
+            }
+
+            while(isTrue == false && reachedEnd == false)//fix
+            {
+
+                //first check unchecked items in path
+                foreach( Item i in SearchPath.ToList())
+                {
+                    if(i.Checked == true)
+                    {
+                        //do nothing?
+                    }
+                    else
+                    {
+                        foreach(Relation r in i.relations)
+                        {
+                            foreach(string s in r.name)
+                            {
+                                if (r.clause == "-" || r.clause == "!=>")
+                                {
+                                    //if the item is related to another item, or implied by:
+                                    var match = items.FirstOrDefault(stringToCheck => stringToCheck.Contains(s)); // match = item related to current item in path being checked
+                                    if(match.valid)
+                                    {
+                                        isTrue = true;
+                                    }
+                                    if (!SearchPath.Contains(match)) //if path does not contain match
+                                    {
+                                        SearchPath.Add(match); //add match
+                                    }
+                                    if(isTrue)
+                                    {
+                                        break;
+                                    }
+                                }
+                            }
+                            if(isTrue)
+                            { break; }
+                        }
+
+                        i.Checked = true;
+                        
+                    }
+                    if (isTrue)
+                    { break; }
+
+
+
+                }
+               if(!SearchPath.Exists(x => x.Checked == false)) //end of loop, check that there are still unchecked items in path.
+                {
+                    reachedEnd = true;
+                }
+            }
                        
 
 
@@ -60,16 +122,39 @@ namespace iengine
             if(isTrue == true)
             {
                 answer = "YES";
+                Item currentItem = new Item();
+                Item nextItem = new Item();
+                TruePath.Add(SearchPath.FirstOrDefault(x => x.valid));//adds inital valid item/true item (with the way the code is set there should only start out being one
+                currentItem = TruePath[0];
+                while (currentItem.query == false)
+                {
+                    foreach(Relation r in currentItem.relations)
+                    {
+                        foreach(string name in r.name)
+                        {
+                            if (r.clause == "=>")
+                            {
+                                //if the item implies something and it is valid then make the item it is implying valid and add the item to the list
+                                
+                                var match = items.FirstOrDefault(stringToCheck => stringToCheck.Contains(name));
+                                match.valid = true;
+                                TruePath.Add(match);
+                            }
+                        }
+                    }
+                    currentItem = TruePath.Last();
+                }
             }
             else
             {
                 answer = "NO";
+                return answer;
             }
             result = answer + ": ";
 
-            foreach(Item i in Path)
+            foreach(Item i in TruePath)
             {
-                if (i != Path.Last<Item>())
+                if (i != TruePath.Last<Item>())
                 {
                     result += i.name + ", ";
                 }
@@ -242,8 +327,7 @@ namespace iengine
                             else if (r.clause == "-")
                             {
                             //if the item is related to another item, add the other item to the list to be checked later
-                                    var match = items.FirstOrDefault(stringToCheck => stringToCheck.Contains(s));
-                                    agenda.Add(match);
+                                    agenda.Add(items.FirstOrDefault(stringToCheck => stringToCheck.Contains(s)));
                             }
                             else if (r.clause == "!=>")
                             {

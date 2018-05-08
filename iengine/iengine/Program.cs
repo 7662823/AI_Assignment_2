@@ -30,9 +30,9 @@ namespace iengine
             else
             {
                 Items = file.ReadFile("test1");
-                //method = "BC";
+                method = "BC";
                 //method = "FC";
-                method = "TT";
+               // method = "TT";
             }
             functions = new Process(method, Items, file.Rules);
             //functions.TruthTable();
