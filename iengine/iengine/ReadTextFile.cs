@@ -58,7 +58,6 @@ namespace iengine
 
         public List<Item> ReadFile(string fileName)
         {
-            //List<Item> result = new List<Item>();
             string[] lines = System.IO.File.ReadAllLines(Directory.GetCurrentDirectory() + "/" + fileName + ".txt");
             bool tell = false;
             bool ask = false;
@@ -163,7 +162,6 @@ namespace iengine
                     }
                 }
             }
-            //Rules = result;
             return Items;
         }
     }

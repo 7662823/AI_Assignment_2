@@ -35,7 +35,6 @@ namespace iengine
                 //method = "TT";
             }
             functions = new Process(method, Items, file.Rules);
-            //functions.TruthTable();
 
             //Write answer output to console based on chosen method
             Console.WriteLine(functions.RunMethod());
