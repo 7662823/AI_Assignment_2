@@ -106,19 +106,14 @@ namespace iengine
                     }
                     if (isTrue)
                     { break; }
-
-
-
                 }
+
                if(!SearchPath.Exists(x => x.Checked == false)) //end of loop, check that there are still unchecked items in path.
                 {
                     reachedEnd = true;
                 }
             }
                        
-
-
-
             if(isTrue == true)
             {
                 answer = "YES";
@@ -179,40 +174,68 @@ namespace iengine
             {
                 foreach (List<string> r in rules)
                 {
-                    if (r.Count == 1)
+                    string target = r.Last();
+                    List<String> itemNames = new List<string>();
+                    foreach (string s in r)
                     {
-                        //for C, then C must be true, otherwise break the function and mark the item as valid being false.
-                        if (!conditions[items.IndexOf(items.FirstOrDefault(stringToCheck => stringToCheck.Contains(r[0])))])
-                        {
-                                itemValid = false;
-                                break;
-                        }
+                        if (s != "&" && s != "=>")
+                            itemNames.Add(s);
+                        //else if (s == "=>")
+                        //    break;
                     }
-                    else if (r.Count == 3)
+                    foreach(string s in itemNames)
                     {
-                        //for A=>C, if B = true, then C must be true, otherwise break the function and mark the item as valid being false.
-                        if (conditions[items.IndexOf(items.FirstOrDefault(stringToCheck => stringToCheck.Contains(r[0])))])
+                        if (s == target)
                         {
-                            if (!conditions[items.IndexOf(items.FirstOrDefault(stringToCheck => stringToCheck.Contains(r[2])))])
+                            if (!conditions[items.IndexOf(items.FirstOrDefault(stringToCheck => stringToCheck.Contains(target)))])
                             {
                                 itemValid = false;
                                 break;
                             }
                         }
-                    }
-                    else if (r.Count == 5)
-                    {
-                        //for A&B=>C, if A & B = true, then C must be true, otherwise break the function and mark the item as valid being false.
-                        if (conditions[items.IndexOf(items.FirstOrDefault(stringToCheck => stringToCheck.Contains(r[0])))] &&
-                            conditions[items.IndexOf(items.FirstOrDefault(stringToCheck => stringToCheck.Contains(r[2])))])
+                        else
                         {
-                            if (!conditions[items.IndexOf(items.FirstOrDefault(stringToCheck => stringToCheck.Contains(r[4])))])
+                            if (!conditions[items.IndexOf(items.FirstOrDefault(stringToCheck => stringToCheck.Contains(s)))])
                             {
-                                itemValid = false;
                                 break;
                             }
                         }
                     }
+
+                    //if (r.Count == 1)
+                    //{
+                    //    //for C, then C must be true, otherwise break the function and mark the item as valid being false.
+                    //    if (!conditions[items.IndexOf(items.FirstOrDefault(stringToCheck => stringToCheck.Contains(r[0])))])
+                    //    {
+                    //            itemValid = false;
+                    //            break;
+                    //    }
+                    //}
+                    //else if (r.Count == 3)
+                    //{
+                    //    //for A=>C, if B = true, then C must be true, otherwise break the function and mark the item as valid being false.
+                    //    if (conditions[items.IndexOf(items.FirstOrDefault(stringToCheck => stringToCheck.Contains(r[0])))])
+                    //    {
+                    //        if (!conditions[items.IndexOf(items.FirstOrDefault(stringToCheck => stringToCheck.Contains(r[2])))])
+                    //        {
+                    //            itemValid = false;
+                    //            break;
+                    //        }
+                    //    }
+                    //}
+                    //else if (r.Count == 5)
+                    //{
+                    //    //for A&B=>C, if A & B = true, then C must be true, otherwise break the function and mark the item as valid being false.
+                    //    if (conditions[items.IndexOf(items.FirstOrDefault(stringToCheck => stringToCheck.Contains(r[0])))] &&
+                    //        conditions[items.IndexOf(items.FirstOrDefault(stringToCheck => stringToCheck.Contains(r[2])))])
+                    //    {
+                    //        if (!conditions[items.IndexOf(items.FirstOrDefault(stringToCheck => stringToCheck.Contains(r[4])))])
+                    //        {
+                    //            itemValid = false;
+                    //            break;
+                    //        }
+                    //    }
+                    //}
                 }
                 if (itemValid)
                 {
@@ -304,12 +327,7 @@ namespace iengine
                     currentItem = agenda.Last();
                     agenda.Remove(agenda.Last());
                 }
-                //adds the current item name to the output display
-                if (currentItem.Checked != true)
-                {
-                    currentItem.Checked = true;
-                    result += currentItem.name + ", ";
-                }
+                
                 //checks each relation in the current item selected
                 foreach (Relation r in currentItem.relations)
                     {
@@ -331,10 +349,10 @@ namespace iengine
                             }
                             else if (r.clause == "!=>")
                             {
-                                //if the item is implied by another item where all instances are true, make the current item true
-                                if (currentItem.valid == false)
-                                {
-                                    var match = items.FirstOrDefault(stringToCheck => stringToCheck.Contains(s));
+                            //if the item is implied by another item where all instances are true, make the current item true
+                            if (currentItem.Checked == false)
+                            {
+                                var match = items.FirstOrDefault(stringToCheck => stringToCheck.Contains(s));
                                     if (match.valid == false)
                                     {
                                         currentItem.valid = false;
@@ -347,6 +365,13 @@ namespace iengine
 
                         }
                     }
+                //adds the current item name to the output display
+                if (currentItem.Checked != true)
+                {
+                    currentItem.Checked = true;
+                    result += currentItem.name + ", ";
+                }
+
                 if (currentItem.query == true)
                 {
                     itemfound = true;
