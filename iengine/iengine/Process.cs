@@ -79,24 +79,34 @@ namespace iengine
                         {
                             foreach(string s in r.name)
                             {
-                                if (r.clause == "-" || r.clause == "!=>")
+                                var match = items.FirstOrDefault(stringToCheck => stringToCheck.Contains(s));
+
+                                if (!SearchPath.Contains(match)) //if path does not contain match
                                 {
-                                    //if the item is related to another item, or implied by:
-                                    var match = items.FirstOrDefault(stringToCheck => stringToCheck.Contains(s)); // match = item related to current item in path being checked
-                                    if(match.valid)
+                                    SearchPath.Add(match); //add match
+                                }
+                                if (r.clause == "!=>") // if the relation is "being implied by" which is all we care about
+                                {
+                                    if (match.relations.Exists(x => x.clause == "-" && x.name.Contains(i.name))) //if the thing implying currently searched item is of type "-" and relates back to i
                                     {
-                                        isTrue = true;
+                                        if (match.valid == true)
+                                        {
+                                            SearchPath.Last().Checked = true;
+                                        }
                                     }
-                                    if (!SearchPath.Contains(match)) //if path does not contain match
+                                    else
                                     {
-                                        SearchPath.Add(match); //add match
-                                    }
-                                    if(isTrue)
-                                    {
-                                        break;
+                                        if (match.valid)
+                                        {
+                                            isTrue = true;
+                                        }
+                                        if (isTrue)
+                                        {
+                                            break;
+                                        }
                                     }
                                 }
-                            }
+                              }
                             if(isTrue)
                             { break; }
                         }
@@ -124,7 +134,7 @@ namespace iengine
                 answer = "YES";
                 Item currentItem = new Item();
                 Item nextItem = new Item();
-                TruePath.Add(SearchPath.FirstOrDefault(x => x.valid));//adds inital valid item/true item (with the way the code is set there should only start out being one
+                TruePath.Add(SearchPath.Last(x => x.valid));//adds inital valid item/true item (with the way the code is set there should only start out being one
                 currentItem = TruePath[0];
                 while (currentItem.query == false)
                 {
@@ -132,13 +142,48 @@ namespace iengine
                     {
                         foreach(string name in r.name)
                         {
+                            var match = items.FirstOrDefault(stringToCheck => stringToCheck.Contains(name));
                             if (r.clause == "=>")
                             {
                                 //if the item implies something and it is valid then make the item it is implying valid and add the item to the list
                                 
-                                var match = items.FirstOrDefault(stringToCheck => stringToCheck.Contains(name));
                                 match.valid = true;
-                                TruePath.Add(match);
+                                if (SearchPath.Contains(match) && !TruePath.Contains(match))
+                                {
+                                    TruePath.Add(match);
+                                }
+                            }
+                            else if(r.clause == "-") //it implies truth with another 
+                            {
+                                List<Item> others = new List<Item>();
+                                //find other item in searchpath that contains clause "-" and r.name = match.name
+                                //check other to see if true
+                                //if true add that other to truthpath, then add match
+                                
+                                foreach(Relation matchR in match.relations)
+                                {
+                                    foreach (string matchRName in matchR.name)
+                                    {
+                                        if (matchR.clause == "!=>" && matchRName != currentItem.name)
+                                        {
+                                            others.Add(SearchPath.FirstOrDefault(stringToCheck => stringToCheck.Contains(matchRName)));
+                                        } }
+                                }
+                                foreach (Item other in others)
+                                {
+                                    if (other.valid == true)
+                                    {
+                                        if (!TruePath.Contains(other))
+                                        {
+                                            TruePath.Add(other);
+                                        }
+                                        if (!TruePath.Contains(match))
+                                        {
+                                            TruePath.Add(match);
+                                        }
+                                    }
+                                }
+                                
                             }
                         }
                     }
