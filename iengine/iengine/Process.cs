@@ -95,14 +95,6 @@ namespace iengine
                                             SearchPath.Last().Checked = true;
                                         }
                                     }
-                                    /*else if(match.valid == true)
-                                    {
-                                        SearchPath.Last().Checked = true;
-                                        if (!SearchPath.Exists(x => x.Checked == false))
-                                        {
-                                            isTrue = true;
-                                        }
-                                    }*/
                                 }
                               }
                             if(isTrue)
@@ -283,8 +275,6 @@ namespace iengine
                     {
                         if (s != "&" && s != "=>")
                             itemNames.Add(s);
-                        //else if (s == "=>")
-                        //    break;
                     }
                     foreach(string s in itemNames)
                     {
@@ -305,40 +295,6 @@ namespace iengine
                         }
                     }
 
-                    //if (r.Count == 1)
-                    //{
-                    //    //for C, then C must be true, otherwise break the function and mark the item as valid being false.
-                    //    if (!conditions[items.IndexOf(items.FirstOrDefault(stringToCheck => stringToCheck.Contains(r[0])))])
-                    //    {
-                    //            itemValid = false;
-                    //            break;
-                    //    }
-                    //}
-                    //else if (r.Count == 3)
-                    //{
-                    //    //for A=>C, if B = true, then C must be true, otherwise break the function and mark the item as valid being false.
-                    //    if (conditions[items.IndexOf(items.FirstOrDefault(stringToCheck => stringToCheck.Contains(r[0])))])
-                    //    {
-                    //        if (!conditions[items.IndexOf(items.FirstOrDefault(stringToCheck => stringToCheck.Contains(r[2])))])
-                    //        {
-                    //            itemValid = false;
-                    //            break;
-                    //        }
-                    //    }
-                    //}
-                    //else if (r.Count == 5)
-                    //{
-                    //    //for A&B=>C, if A & B = true, then C must be true, otherwise break the function and mark the item as valid being false.
-                    //    if (conditions[items.IndexOf(items.FirstOrDefault(stringToCheck => stringToCheck.Contains(r[0])))] &&
-                    //        conditions[items.IndexOf(items.FirstOrDefault(stringToCheck => stringToCheck.Contains(r[2])))])
-                    //    {
-                    //        if (!conditions[items.IndexOf(items.FirstOrDefault(stringToCheck => stringToCheck.Contains(r[4])))])
-                    //        {
-                    //            itemValid = false;
-                    //            break;
-                    //        }
-                    //    }
-                    //}
                 }
                 if (itemValid)
                 {
@@ -361,7 +317,6 @@ namespace iengine
                     result = "YES: " + validCount.ToString();
                 else
                     result = "NO ";
-
             }
             return result;
         } 
