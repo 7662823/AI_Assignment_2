@@ -58,7 +58,6 @@ namespace iengine
 
         public List<Item> ReadFile(string fileName)
         {
-            //List<Item> result = new List<Item>();
             string[] lines = System.IO.File.ReadAllLines(Directory.GetCurrentDirectory() + "/" + fileName + ".txt");
             bool tell = false;
             bool ask = false;
@@ -155,42 +154,6 @@ namespace iengine
 
                                 
                             }
-
-                            /*switch (SplitRule.Length)
-                            {
-                                //assign item to be true
-                                case 1:
-
-                                    var match = Items.FirstOrDefault(stringToCheck => stringToCheck.Contains(SplitRule[0]));
-                                    if (match != null)
-                                    {
-                                        match.valid = true;
-                                    }
-                                    else {
-                                        Items.Add(new Item());
-                                        Items.Last().name = SplitRule[0];
-                                        Items.Last().valid = true;
-                                    }
-                                    break;
-                                case 3:
-                                    //create the relation in the items being "SplitRule[0] SplitRule[1] SplitRule[2]" eg, "A => B"
-                                    addRule(new string[] { SplitRule[2] }, SplitRule[1], SplitRule[0]);
-                                    // '!' indicates it is the reverse order
-                                    addRule(new string[] { SplitRule[0] }, "!"+SplitRule[1], SplitRule[2]);
-
-                                    break;
-                                case 5:
-
-                                    // "-" denotes that it is a link to another object rather then "=>" being implies
-                                    
-                                    addRule(new string[] { SplitRule[4] }, "-", SplitRule[0]);
-                                    addRule(new string[] { SplitRule[4] }, "-", SplitRule[2]);
-                                    addRule(new string[] { SplitRule[0], SplitRule[2] }, "!"+SplitRule[3], SplitRule[4]);
-
-                                    break;
-                                default:
-                                    break;
-                            }*/
                         }
                     }
                     else if (ask == true)
@@ -204,7 +167,6 @@ namespace iengine
 
                 }
             }
-            //Rules = result;
             return Items;
         }
     }
