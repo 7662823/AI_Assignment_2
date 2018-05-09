@@ -29,10 +29,10 @@ namespace iengine
             }
             else
             {
-                Items = file.ReadFile("test1");
-                method = "BC";
-                //method = "FC";
-               // method = "TT";
+                Items = file.ReadFile("test4");
+               //method = "BC";
+                method = "FC";
+                //method = "TT";
             }
             functions = new Process(method, Items, file.Rules);
             //functions.TruthTable();
