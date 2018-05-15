@@ -91,7 +91,6 @@ namespace iengine
                             SplitRule = Regex.Split(r.Replace(" ", string.Empty), @"(" + identifier +@")");
                             if(SplitRule[0] == "")
                             {
-                                //string[] a;
                                 SplitRule = new string[0];
                             }
                             else
@@ -149,10 +148,7 @@ namespace iengine
                                        addRule(new string[] { target }, "-", ruleChar);
                                     }
                                     addRule(rule.ToArray(), "!" + clause, target);
-                                }
-
-
-                                
+                                }   
                             }
                         }
                     }
@@ -164,7 +160,6 @@ namespace iengine
                             item.query = true;
                         }
                     }
-
                 }
             }
             return Items;

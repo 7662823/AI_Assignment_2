@@ -29,8 +29,8 @@ namespace iengine
             }
             else
             {
-                Items = file.ReadFile("test2");
-               method = "BC";
+                Items = file.ReadFile("test4");
+                method = "BC";
                 //method = "FC";
                 //method = "TT";
             }

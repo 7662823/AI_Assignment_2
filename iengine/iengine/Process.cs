@@ -63,24 +63,18 @@ namespace iengine
                 }
             }
 
-            while(isTrue == false && reachedEnd == false)//fix
+            while(isTrue == false && reachedEnd == false)
             {
-
                 //first check unchecked items in path
                 foreach( Item i in SearchPath.ToList())
                 {
-                    if(i.Checked == true)
-                    {
-                        //do nothing?
-                    }
-                    else
+                    if(i.Checked!=true)
                     {
                         foreach(Relation r in i.relations)
                         {
                             foreach(string s in r.name)
                             {
                                 var match = items.FirstOrDefault(stringToCheck => stringToCheck.Contains(s));
-
                                 
                                 if (r.clause == "!=>") // if the relation is "being implied by" which is all we care about
                                 {
@@ -97,17 +91,10 @@ namespace iengine
                                     }
                                 }
                               }
-                            if(isTrue)
-                            { break; }
                         }
-
                         i.Checked = true;
-                        
                     }
-                    if (isTrue)
-                    { break; }
                 }
-               
                if(!SearchPath.Exists(x => x.Checked == false)) //end of loop, check that there are still unchecked items in path.
                 {
                     reachedEnd = true;
@@ -132,9 +119,7 @@ namespace iengine
                             isTrue = false;
                         }
                     }
-                    
                 }
-               //check to make sure not all options in the searchpath are true, otherwise isTrue = true
             }
                        
             if(isTrue == true)
@@ -143,11 +128,9 @@ namespace iengine
                 {
                     i.Checked = false; //unchecks all in search path so check can be reused
                 }
-
                 answer = "YES";
                 Item currentItem = new Item();
-                Item nextItem = new Item();
-                TruePath.Add(SearchPath.Last(x => x.valid));//adds inital valid item/true item (with the way the code is set there should only start out being one
+                TruePath.Add(SearchPath.Last(x => x.valid));// adds last found item in searchPath that is valid
                 currentItem = TruePath[0];
 
                 while (currentItem.query == false)
@@ -162,7 +145,6 @@ namespace iengine
                                 if (r.clause == "=>")
                                 {
                                     //if the item implies something and it is valid then make the item it is implying valid and add the item to the list
-
                                     match.valid = true;
                                     if (SearchPath.Contains(match) && !TruePath.Contains(match))
                                     {
@@ -197,7 +179,6 @@ namespace iengine
                                                 TruePath.Add(other);
                                             }
                                             thisMatchIsTrue = true;
-
                                         }
                                         else
                                         {
