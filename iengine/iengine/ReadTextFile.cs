@@ -58,7 +58,18 @@ namespace iengine
 
         public List<Item> ReadFile(string fileName)
         {
-            string[] lines = System.IO.File.ReadAllLines(Directory.GetCurrentDirectory() + "/" + fileName + ".txt");
+            string[] file = fileName.Split('.');
+            string[] lines;
+            if (file.Length == 1)
+                lines = System.IO.File.ReadAllLines(Directory.GetCurrentDirectory() + "/" + fileName + ".txt");
+            else if(file.Length == 2)
+                lines = System.IO.File.ReadAllLines(Directory.GetCurrentDirectory() + "/" + fileName);
+            else
+            {
+                Console.WriteLine("file name extension error");
+                return null;
+            }
+
             bool tell = false;
             bool ask = false;
             string[] rules;
