@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace iengine
 {
-    class Item
-    {
 
+    public class Item
+    {
         public string name;
         public bool query = false;
         public bool valid = false;
@@ -29,7 +29,7 @@ namespace iengine
         
     }
 
-    class Relation
+    public class Relation
     {
         public List<string> name;
         public string clause;

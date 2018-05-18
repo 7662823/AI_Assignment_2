@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace iengine
 {
-    class ReadTextFile
+    public class ReadTextFile
     {
       public List<Item> Items;
 

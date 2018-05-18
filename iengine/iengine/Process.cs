@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace iengine
 {
-    class Process
+   public  class Process
     {
         private string currentMethod;
         private List<Item> items;
