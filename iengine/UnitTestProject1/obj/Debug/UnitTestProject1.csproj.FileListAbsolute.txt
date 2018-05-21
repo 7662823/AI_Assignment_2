@@ -15,3 +15,5 @@ C:\Users\user\OneDrive\Documents\AI\Assignment 2\iengine\UnitTestProject1\obj\De
 C:\Users\user\OneDrive\Documents\AI\Assignment 2\iengine\UnitTestProject1\obj\Debug\UnitTestProject1.csproj.CopyComplete
 C:\Users\user\OneDrive\Documents\AI\Assignment 2\iengine\UnitTestProject1\obj\Debug\UnitTestProject1.dll
 C:\Users\user\OneDrive\Documents\AI\Assignment 2\iengine\UnitTestProject1\obj\Debug\UnitTestProject1.pdb
+C:\Users\Sean\Documents\Uni\2018\AI\Assignment2\iengine\UnitTestProject1\obj\Debug\UnitTestProject1.csprojResolveAssemblyReference.cache
+C:\Users\Sean\Documents\Uni\2018\AI\Assignment2\iengine\UnitTestProject1\obj\Debug\UnitTestProject1.csproj.CoreCompileInputs.cache

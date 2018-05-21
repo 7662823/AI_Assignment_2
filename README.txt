@@ -33,7 +33,7 @@
 --Student Details:
 
 Jack Danby - Phillips (7662823)
-Sean Lacy
+Sean Lacy - (100858144)
 
 --Features/Bugs/Missing:
 
