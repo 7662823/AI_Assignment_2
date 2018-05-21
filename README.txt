@@ -30,22 +30,44 @@
                                                   
                                                   
 
-ØStudent Details:
+--Student Details:
+
 Jack Danby - Phillips (7662823)
 Sean Lacy
 
-ØFeatures/Bugs/Missing:
+--Features/Bugs/Missing:
+
+- Features -
+- Truth Table Checking
+- Forward Chaining
+- Backward Chaining
+- Opening .txt files with and without '.txt' extension added to initial arguements
+
+
  Include a list of the features you 
 have implemented. Clearly state if a 
 required feature has not been implemented. Failure to 
 do this will result in penalties. Include a list of 
 any known bugs. 
 
-?Test cases:
+--Test cases:
+
+-Reading text file Test Cases
+	- Test if it saved the items/names appropiately without repeats
+	- test if names read are valid/not according to the file
+	- check if the specified item is being queried
+	- check the various items relations
+
+
  The test cases you have developed ton test
  your program. What bugs have you found? 
 
-?Acknowledgements/Resources:
+
+--Acknowledgements/Resources:
+For reading from the textfile, Truth Table Check and Forward Chaining method, all resources used were given throughout either lectures or tutorials. 
+For these three components, the main Acknowledgements go towards Bao for helping me understand the main concepts behind these methods fully.
+Once I grasped the understanding on TT checking and FC, I was able to easily implement the code to operate efficiently and effectively.
+
  Include in your readme.txt file 
 a list of the resources you have 
 used to create your work. A simple list of URL's
@@ -54,11 +76,17 @@ description of how the person or we
 bsite assisted you in your work. 
 
 ?Notes:
- Anything else you want to tell the marker, su
-ch as how to use the GUI version of your 
+ Anything else you want to tell the marker, 
+such as how to use the GUI version of your 
 program, and something particular about your implementation. 
 
 ?Summary report:
+Reading from textfile Initial Implementatiion(with single '&' Statement implementation) - Jack Danby - Phillips
+Reading from textfile (allowing for multiple '&' Statements) - Sean Lacy
+Forward Chaining - Jack Danby - Phillips
+Backward Chaining - Sean Lacy
+Truth Table Checking - Jack Danby - Phillips
+
  Summary of the teamwork in this assignment. You need to clearly indicate who 
 did what and how each team member gave feedback to
  other members. In this report, the overall 

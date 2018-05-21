@@ -18,20 +18,48 @@ namespace UnitTestProject1
             a.name = "a";
             a.valid = true;
             a.query = false;
+            Relation aRelation = new Relation();
+            aRelation.name.Add("p2");
+            aRelation.clause = "=>";
+            a.relations.Add(aRelation);
    
             Item b = new Item();
             b.name = "b";
             b.valid = true;
             b.query = true;
+            Relation bRelation = new Relation();
+            bRelation.name.Add("c");
+            bRelation.clause = "-";
+            b.relations.Add(bRelation);
 
             Item p2 = new Item();
             p2.name = "p2";
             p2.valid = true;
             p2.query = false;
+            Relation p2Relation1 = new Relation();
+            p2Relation1.name.Add("a");
+            p2Relation1.clause = "!=>";
+            p2.relations.Add(p2Relation1);
+
+            Relation p2Relation2 = new Relation();
+            p2Relation2.name.Add("c");
+            p2Relation2.clause = "-";
+            p2.relations.Add(p2Relation2);
+
+            Item c = new Item();
+            c.name = "c";
+            c.valid = false;
+            c.query = false;
+            Relation cRelation = new Relation();
+            cRelation.name.Add("p2");
+            cRelation.name.Add("b");
+            cRelation.clause = "!=>";
+            c.relations.Add(cRelation);
 
             _expected.Add(a);
             _expected.Add(b);
             _expected.Add(p2);
+            _expected.Add(c);
         }
 
         [TestMethod]
