@@ -280,7 +280,15 @@ namespace iengine
                 if (itemValid)
                 {
                     validCount++;
-                    if (!conditions[items.IndexOf(items.FirstOrDefault(q => q.query))])
+                    if (items.FirstOrDefault(q => q.query) != null)
+                    {
+                        if (!conditions[items.IndexOf(items.FirstOrDefault(q => q.query))])
+                        {
+                            queryReault = false;
+                            break;
+                        }
+                    }
+                    else
                     {
                         queryReault = false;
                         break;
@@ -297,7 +305,7 @@ namespace iengine
                 if (queryReault)
                     result = "YES: " + validCount.ToString();
                 else
-                    result = "NO ";
+                    result = "NO";
             }
             return result;
         } 
