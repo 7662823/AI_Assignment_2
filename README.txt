@@ -35,22 +35,25 @@
 Jack Danby - Phillips (7662823)
 Sean Lacy - (100858144)
 
---Features/Bugs/Missing:
+------------------Features/Bugs/Missing------------------
 
-- Features -
+-Features-
+
 - Truth Table Checking
 - Forward Chaining
 - Backward Chaining
 - Opening .txt files with and without '.txt' extension added to initial arguements
+- Horn form KB Only
 
+-Bugs-
 
- Include a list of the features you 
-have implemented. Clearly state if a 
-required feature has not been implemented. Failure to 
-do this will result in penalties. Include a list of 
-any known bugs. 
+From the current implementation of all implemented features, there is no known bugs found by us through numerious testing of the application.
 
---Test cases:
+-Missing-
+The only components missing in the application is the Research components with further expansion and development of the program.
+Generic Knowledge Base Format is missing (only allowed for Horn-Form KB Input)
+
+------------------Test cases------------------
 
 -Reading text file Test Cases
 	- Test if it saved the items/names appropiately without repeats
@@ -58,38 +61,59 @@ any known bugs.
 	- check if the specified item is being queried
 	- check the various items relations
 
+-Truth Table Check Test Cases
+	- Test Output for given Example 1
+	- Test Output for given Example 2
+	- Test Output for Multi And Statement
+	- Test Output for Non-Existant Query Within Rules
+	- Test Output for Valid Rules but Invalid Query
 
- The test cases you have developed ton test
- your program. What bugs have you found? 
+-Bugs found and fixed through Test Case Implementation-
+1. Test Output for Non-Existant Query Within Rules for Truth Table Check Caused the Program to crash when first implemented due to null exception, This has now been fixed.
 
 
---Acknowledgements/Resources:
-For reading from the textfile, Truth Table Check and Forward Chaining method, all resources used were given throughout either lectures or tutorials. 
-For these three components, the main Acknowledgements go towards Bao for helping me understand the main concepts behind these methods fully.
-Once I grasped the understanding on TT checking and FC, I was able to easily implement the code to operate efficiently and effectively.
 
- Include in your readme.txt file 
-a list of the resources you have 
-used to create your work. A simple list of URL's
- is not enough. Include with each entry a basic 
-description of how the person or we
-bsite assisted you in your work. 
 
-?Notes:
- Anything else you want to tell the marker, 
-such as how to use the GUI version of your 
-program, and something particular about your implementation. 
+------------------Acknowledgements/Resources------------------
 
-?Summary report:
+For reading from the textfile, Truth Table Check and Forward Chaining and Backward Chaining method, all resources used were given throughout either lectures or tutorials. 
+For these three components, the main Acknowledgements go towards Bao for helping us understand the main concepts behind these methods fully.
+Once we grasped the understanding on all of these methods, we were able to easily implement the code to operate efficiently and effectively.
+For the most part, the operation of this Assignment operated using similar methods as learned and explored through Assignment 1.
+Such as reading from the text file and sorting the data in a efficient mannor and Utalising lists in a push and pop mannor to achieve effective and efficient methods.
+
+
+------------------Notes------------------
+
+The current implementation is just the basic, default implementation of the iengine criteria.
+There is nothing special to note about our application besides the basic criteria that is stated in the given assignment 2 doccument.
+
+
+------------------Summary report------------------
+
+-Program Implementation-
 Reading from textfile Initial Implementatiion(with single '&' Statement implementation) - Jack Danby - Phillips
 Reading from textfile (allowing for multiple '&' Statements) - Sean Lacy
 Forward Chaining - Jack Danby - Phillips
 Backward Chaining - Sean Lacy
 Truth Table Checking - Jack Danby - Phillips
 
- Summary of the teamwork in this assignment. You need to clearly indicate who 
-did what and how each team member gave feedback to
- other members. In this report, the overall 
-percentage of contribution by each student to the 
-project has to be clearly specified and summed to 
-100%. 
+-Unit Tests-
+Reading From Text File - Jack Danby - Phillips
+Truth Table Checking - Jack Danby - Phillips
+Forward Chaining - Sean Lacy
+Backward Chaining - Sean Lacy
+
+-Team Member Feedback-
+By Jack:
+I believe throughout this assignment Sean worked throughly and efficiently throughout the project with great assistance in implementing the Reading from text file process
+and through creating the backward chaining method working as intended.
+
+By Sean:
+
+
+-Overall Percentage Contribution-
+Jack Danby - Phillips		50%
+Sean Lacy			50%
+-----------------------------------
+Total				100%
