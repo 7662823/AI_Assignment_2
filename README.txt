@@ -67,9 +67,28 @@ Generic Knowledge Base Format is missing (only allowed for Horn-Form KB Input)
 	- Test Output for Multi And Statement
 	- Test Output for Non-Existant Query Within Rules
 	- Test Output for Valid Rules but Invalid Query
+	- Test Output for Query item has rule for equaling true.
+
+-Forward Chaining Check Test Cases
+	- Test Output for given Example 1
+	- Test Output for given Example 2
+	- Test Output for Multi And Statement
+	- Test Output for Non-Existant Query Within Rules
+	- Test Output for Valid Rules but Invalid Query
+	- Test Output for Query item has rule for equaling true.
+
+-Back Chaining Check Test Cases
+	- Test Output for given Example 1
+	- Test Output for given Example 2
+	- Test Output for Multi And Statement
+	- Test Output for Non-Existant Query Within Rules
+	- Test Output for Valid Rules but Invalid Query
+	- Test Output for Query item has rule for equaling true.
 
 -Bugs found and fixed through Test Case Implementation-
 1. Test Output for Non-Existant Query Within Rules for Truth Table Check Caused the Program to crash when first implemented due to null exception, This has now been fixed.
+2. Test Output for Non-Existant Query in Back Chaining crashed because the program didn't account for a query that wasn't found within the item list, This has now been fixed.
+3. Test Output for Query item has rule for equaling true, in both forward and back chaining, returned NO, rather than YES: p, which in both cases was fixed by initially checking for that rule.
 
 
 
@@ -110,7 +129,9 @@ I believe throughout this assignment Sean worked throughly and efficiently throu
 and through creating the backward chaining method working as intended.
 
 By Sean:
-
+Jack was the clear leader of this group, setting up the project and keeping us both on track with the schedule. We often shared any problems in the code we encountered with one another
+and were able to solve them together, Jack being a great help to me in many of these instances. His work on the Truth Table, Reading from text file and Forward chaining code was
+done quickly and efficiently.
 
 -Overall Percentage Contribution-
 Jack Danby - Phillips		50%
