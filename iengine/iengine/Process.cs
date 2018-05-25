@@ -390,8 +390,10 @@ namespace iengine
                 //checks each relation in the current item selected
                 foreach (Relation r in currentItem.relations)
                     {
+                    bool temp = true;
                         foreach (string s in r.name)
                         {
+                            
                             if (r.clause == "=>")
                             {
                             //if the item implies something and it is valid then make the item it is implying valid and add the item to the list
@@ -414,13 +416,17 @@ namespace iengine
                                 var match = items.FirstOrDefault(stringToCheck => stringToCheck.Contains(s));
                                     if (match.valid == false)
                                     {
-                                        currentItem.valid = false;
-                                        break;
+                                    temp = false;
                                     }
-                                    else
+                                    
+                                if (s == r.name.Last())
+                                {
+                                    if (currentItem.valid == false && temp == true)
                                         currentItem.valid = true;
                                 }
                             }
+                            }
+                        
 
                         }
                     }

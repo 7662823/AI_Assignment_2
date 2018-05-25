@@ -1,0 +1,4 @@
+TELL
+s=>p;c&l=>p;p;
+ASK
+p
