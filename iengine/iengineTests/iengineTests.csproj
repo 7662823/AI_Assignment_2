@@ -60,6 +60,8 @@
     <Compile Include="ReadTextFileTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TruthTableTests.cs" />
+    <Compile Include="ForwardChainingTests.cs" />
+    <Compile Include="BackChainingTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

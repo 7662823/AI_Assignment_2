@@ -62,7 +62,10 @@ namespace iengine
                     SearchPath.Add(i);
                 }
             }
-
+            if(SearchPath.Count == 0)
+            {
+                return "NO";
+            }
             while(isTrue == false && reachedEnd == false)
             {
                 //first check unchecked items in path
@@ -215,26 +218,28 @@ namespace iengine
                         }
                     }            
                 }
+                result = answer + ": ";
+                foreach (Item i in TruePath)
+                {
+                    if (i != TruePath.Last<Item>())
+                    {
+                        result += i.name + ", ";
+                    }
+                    else
+                    {
+                        result += i.name;
+                    }
+                }
+                return result;
             }
             else
             {
                 answer = "NO";
                 return answer;
             }
-            result = answer + ": ";
+            
 
-            foreach(Item i in TruePath)
-            {
-                if (i != TruePath.Last<Item>())
-                {
-                    result += i.name + ", ";
-                }
-                else
-                {
-                    result += i.name;
-                }
-            }
-            return result;
+           
         } 
 
         public string TruthTable()
@@ -430,13 +435,13 @@ namespace iengine
                     if (currentItem.valid == true)
                         result = "YES: " + result;
                     else
-                        result = "NO: " + result;
+                        result = "NO";
 
                     break;
                 }
             }
             if (!itemfound)
-                result = "NO: " + result.Remove(result.Count() - 2);
+                result = "NO";
 
             return result;
         }
