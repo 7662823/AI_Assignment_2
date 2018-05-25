@@ -66,6 +66,13 @@ namespace iengine
             {
                 return "NO";
             }
+            else
+            {
+                if(SearchPath[0].valid)
+                {
+                    return "YES: " + SearchPath[0].name;
+                }
+            }
             while(isTrue == false && reachedEnd == false)
             {
                 //first check unchecked items in path
