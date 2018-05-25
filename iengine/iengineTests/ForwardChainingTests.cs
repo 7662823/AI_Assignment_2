@@ -52,5 +52,14 @@ namespace iengine.Tests
 
             Assert.AreEqual("NO", function.RunMethod());
         }
+        [TestMethod]
+        public void TestOutputQueryItemThatIsPresetToTrue()
+        {
+            ReadTextFile file = new ReadTextFile();
+            List<Item> Items = file.ReadFile("Test/test6.txt");
+            Process function = new Process("FC", Items, file.Rules);
+
+            Assert.AreEqual("YES: p", function.RunMethod());
+        }
     }
 }
