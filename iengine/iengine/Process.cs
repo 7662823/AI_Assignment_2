@@ -407,8 +407,8 @@ namespace iengine
                                 var match = items.FirstOrDefault(stringToCheck => stringToCheck.Contains(s));
                                     if (match.valid == false)
                                     {
-                                        currentItem.valid = false;
-                                        break;
+                                        //currentItem.valid = false;
+                                        //break;
                                     }
                                     else
                                         currentItem.valid = true;
